@@ -19,7 +19,7 @@ const Editor = (props: Props) => {
   const dispatch = useDispatch<Dispatch>();
 
   const editorEl = useRef<HTMLDivElement>(null);
-  const editorView = useRef<EditorView>();
+  const editorView = useRef<EditorView | undefined>(undefined);
 
   const editorState = useSelector(
     (state: State) => selectors.getEditorState(state, stateKey)?.state,

@@ -1,10 +1,11 @@
+import { isAction } from 'redux';
 import type { Middleware } from '../types';
 import type { UpdateEditorState } from './types';
 import { UPDATE_EDITOR_STATE } from './types';
 
 const updateProsemirrorViewsMiddleware: Middleware = (store) => (next) => (action) => {
   const result = next(action);
-  if (action.type === UPDATE_EDITOR_STATE) {
+  if (isAction(action) && action.type === UPDATE_EDITOR_STATE) {
     const { stateId, viewId, editorState } = (action as UpdateEditorState).payload;
     const state = store.getState().editor.state.editors[stateId];
     const { views } = store.getState().editor.state;

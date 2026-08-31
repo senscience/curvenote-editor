@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import type { Theme } from '@material-ui/core';
 import type { EditorState, Transaction } from 'prosemirror-state';
 import type { Node, Schema, Slice } from 'prosemirror-model';
 import { Fragment } from 'prosemirror-model';
@@ -36,7 +35,6 @@ export type Options = {
     pos: number,
     event: MouseEvent,
   ) => boolean;
-  theme: Theme;
   citationPrompt: () => Promise<Nodes.Cite.Attrs[] | null>;
   createLinkSearch: () => Promise<SearchContext>;
   // nodeViews override any of the default nodeviews
@@ -114,9 +112,6 @@ export const opts: Required<Options> = {
   },
   getCaptionFragment(schema, src) {
     return ref.opts().getCaptionFragment?.(schema, src) ?? Fragment.empty;
-  },
-  get theme() {
-    return ref.opts().theme;
   },
   get nodeViews() {
     return ref.opts().nodeViews ?? {};
