@@ -1,8 +1,8 @@
 {
   "name": "@curvenote/editor",
   "version": "0.17.6",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -23,16 +23,10 @@
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "npm run clean; tsc;",
-    "build": "npm run compile; npm run css; webpack --config webpack.prod.js",
-    "build:dev": "webpack --config webpack.dev.js",
+    "build": "npm run compile",
     "prepublishOnly": "npm run build",
     "css": "sass styles/index.scss dist/editor.css",
     "css:watch": "sass --watch styles/index.scss dist/editor.css",
-    "test": "cypress run --component",
-    "cy": "cypress open",
-    "test:watch": "jest --watchAll",
-    "test:clear": "jest --clearCache",
-    "start": "webpack serve --liveReload --open --config webpack.dev.js",
     "lint": "eslint \"src/**/*.ts\" -c .eslintrc.js",
     "lint:format": "prettier --check \"src/**/*.tsx\" \"src/**/*.ts\"",
     "dev": "tsc -w --preserveWatchOutput -p ."

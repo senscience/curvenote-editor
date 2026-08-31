@@ -2,6 +2,7 @@
 node_modules
 dist
 .turbo
+.idea
 .yalc/
 yalc.lock
 *.log

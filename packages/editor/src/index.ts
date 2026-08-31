@@ -2,7 +2,7 @@ import * as runtime from '@curvenote/runtime';
 import * as collab from './collab';
 
 export * from './store';
-export * from './components';
+export { Editor } from './components';
 
 export { default as views } from './views';
 export type { NodeViewProps } from './views';
