@@ -22,8 +22,8 @@
   "devDependencies": {
     "esbuild": "^0.14.53",
     "eslint-config-curvenote": "^0.0.1",
-    "prettier": "latest",
-    "turbo": "latest"
+    "prettier": "^3",
+    "turbo": "^2"
   },
   "engines": {
     "npm": ">=7.0.0",
