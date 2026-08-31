@@ -5,19 +5,13 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "build:cypress": "turbo run build --filter schema --filter prosemirror* --filter prosemirror-utils --filter sidenotes --filter emoji",
     "start": "turbo run start",
-    "start:editor": "turbo run start --filter editor",
     "clean": "turbo run clean --parallel && find . -name '.turbo' -type d -prune -exec rm -rf '{}' +",
     "lint": "turbo run lint",
     "lint:format": "turbo run lint:format",
     "test": "turbo run test",
-    "test:ci": "turbo run test --filter schema --filter prosemirror* --filter prosemirror-utils",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepublishOnly": "npm run build",
-    "changeset": "changeset",
-    "version": "changeset version && npm install",
-    "publish": "npm run clean && npm run build -- --force && changeset publish && git push --follow-tags"
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "esbuild": "^0.14.53",
@@ -26,11 +20,7 @@
     "turbo": "^2"
   },
   "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   },
-  "packageManager": "npm@8.10.0",
-  "dependencies": {
-    "@changesets/cli": "^2.23.2"
-  }
+  "packageManager": "npm@10.8.2"
 }
