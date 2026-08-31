@@ -8,7 +8,6 @@ import { MentionView } from './Mention';
 import { CodeBlockView } from './CodeBlockView';
 import { FootnoteView } from './FootnoteView';
 import createNodeView from './NodeView';
-import WidgetView, { newWidgetView } from './WidgetView';
 import { clickSelectFigure } from './utils';
 
 export type { NodeViewProps, GetPos } from './types';
@@ -25,8 +24,6 @@ export default {
   LinkView,
   createLinkBlockView,
   TimeView,
-  WidgetView,
-  newWidgetView,
   CodeBlockView,
   FootnoteView,
 };

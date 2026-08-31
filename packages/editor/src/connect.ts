@@ -8,7 +8,6 @@ import type { EditorView, DirectEditorProps } from 'prosemirror-view';
 import type { Nodes } from '@curvenote/schema';
 import { process } from '@curvenote/schema';
 import type { Store } from './store/types';
-import setupComponents from './r-components';
 import type { LinkResult } from './store/suggestion/types';
 
 export type SearchContext = {
@@ -67,11 +66,10 @@ export const ref: Ref<Store> = {
 export function setup(
   store: Store,
   opts: Options,
-  options = { setupComponents: true, setupSidenotes: true },
+  options = { setupSidenotes: true },
 ) {
   ref._store = store;
   ref._opts = opts;
-  if (options.setupComponents) setupComponents(store);
   if (options.setupSidenotes) sidenotes.setup(store as unknown as sidenotes.Store, { padding: 10 });
 }
 
