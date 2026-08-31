@@ -6,7 +6,6 @@ import type {
   Reducer as RReducer,
 } from 'redux';
 import type { types as runtimeTypes } from '@curvenote/runtime';
-import type { State as SidenotesState } from 'sidenotes';
 import type { EditorsState, EditorActionTypes } from './state/types';
 import type { UIState, UIActionTypes } from './ui/types';
 import { SelectionKinds } from './ui/types';
@@ -30,7 +29,6 @@ export interface State {
     attrs: AttributesState;
   };
   runtime: runtimeTypes.State['runtime'];
-  sidenotes: SidenotesState['sidenotes'];
 }
 
 export type EditorActions =
