@@ -56,12 +56,6 @@ export function createEditorView(
         link_block: views.createLinkBlockView,
         time: views.TimeView,
         mention: views.MentionView,
-        button: views.newWidgetView,
-        display: views.newWidgetView,
-        dynamic: views.newWidgetView,
-        range: views.newWidgetView,
-        switch: views.newWidgetView,
-        variable: views.newWidgetView,
         ...opts.nodeViews,
       },
       // This can be set in the middleware `tr.setMeta(editable, false)`
