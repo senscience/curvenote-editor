@@ -1,11 +1,11 @@
 {
-  "name": "@curvenote/editor",
-  "version": "0.17.6",
+  "name": "@senscience/curvenote-editor",
+  "version": "0.17.6-senscience.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
   "publishConfig": {
-    "access": "public"
+    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "prosemirror",
@@ -14,12 +14,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/curvenote/editor.git"
+    "url": "git+https://github.com/senscience/curvenote-editor.git"
   },
   "bugs": {
-    "url": "https://github.com/curvenote/editor/issues"
+    "url": "https://github.com/senscience/curvenote-editor/issues"
   },
-  "homepage": "https://github.com/curvenote/editor/tree/main/packages/editor",
+  "homepage": "https://github.com/senscience/curvenote-editor/tree/main/packages/editor",
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "npm run clean; tsc;",
@@ -68,34 +68,17 @@
   "devDependencies": {
     "@curvenote/runtime": "^0.2.9",
     "@curvenote/schema": "0.12.18",
-    "@testing-library/cypress": "^8.0.3",
-    "@testing-library/dom": "^8.14.0",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/user-event": "^14.2.1",
     "@types/codemirror": "5.60.5",
-    "@types/jest": "^28.1.3",
     "@types/katex": "^0.16.7",
     "@types/lodash.debounce": "^4.0.7",
-    "@types/lodash.isequal": "^4.5.6",
     "@types/node": "^18.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/uuid": "^8.3.4",
-    "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "^6.7.1",
-    "cypress": "^10.2.0",
-    "dotenv": "^10.0.0",
     "eslint": "^8.21.0",
     "eslint-config-curvenote": "*",
-    "express": "^4.18.1",
     "fuse.js": "^6.6.2",
-    "html-loader": "^3.1.2",
-    "html-webpack-plugin": "^5.5.0",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^28.1.1",
-    "jest-environment-jsdom": "^28.1.1",
-    "prettier": "latest",
+    "prettier": "^3",
     "prosemirror-collab": "^1.3.0",
     "prosemirror-model": "^1.18.1",
     "prosemirror-schema-list": "^1.2.0",
@@ -108,28 +91,10 @@
     "redux": "^5",
     "redux-thunk": "^3",
     "sass": "^1.53.0",
-    "sass-loader": "^13.0.2",
-    "style-loader": "^3.3.1",
-    "ts-loader": "^9.3.1",
-    "typescript": "latest",
-    "webpack": "^5.47.0",
-    "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2",
-    "webpack-merge": "^5.8.0"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "typescript": "^5.9"
   },
   "files": [
     "dist"
-  ]
+  ],
+  "description": "Fork of @curvenote/editor with the Material UI layer removed and React 19 support"
 }
