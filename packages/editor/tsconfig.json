@@ -31,8 +31,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src/**/*",
-    "demo/**/*"
+    "src/**/*"
   ],
   "exclude": [
     "**/*.spec.ts"
