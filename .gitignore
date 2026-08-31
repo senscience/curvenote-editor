@@ -1,6 +1,7 @@
 *.code-workspace
 node_modules
 dist
+.turbo
 .yalc/
 yalc.lock
 *.log
