@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+import React from 'react';
+import type { Root } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { Node } from 'prosemirror-model';
 import { EditorView } from 'prosemirror-view';
-import { ThemeProvider } from '@material-ui/core';
 import { Provider } from 'react-redux';
 import { isEditable } from '../prosemirror/plugins/editable';
-import { opts, ref } from '../connect';
+import { ref } from '../connect';
 import { GetPos, NodeViewProps } from './types';
 
 export type Options = {
@@ -14,43 +14,11 @@ export type Options = {
   enableSelectionHighlight?: boolean;
 };
 
-export type ClassWrapperProps = {
+export type NodeViewPos = {
   node: Node;
   view: EditorView;
   getPos: GetPos;
-  Child: React.FunctionComponent<NodeViewProps>;
 };
-
-type ClassWrapperState = {
-  open: boolean;
-  edit: boolean;
-};
-
-class ClassWrapper extends Component<ClassWrapperProps, ClassWrapperState> {
-  constructor(props: ClassWrapperProps) {
-    super(props);
-    this.state = {
-      open: false,
-      edit: false,
-    };
-  }
-
-  render() {
-    const { view, node, getPos, Child } = this.props;
-    const { open, edit } = this.state;
-    return (
-      <Child
-        {...{
-          view,
-          node,
-          getPos,
-          open,
-          edit,
-        }}
-      />
-    );
-  }
-}
 
 export class ReactWrapper {
   dom: HTMLElement;
@@ -59,59 +27,61 @@ export class ReactWrapper {
 
   view: EditorView;
 
-  editor: null | React.Component = null;
-
   getPos: GetPos;
 
   isSelectionHighlightEnabled: boolean;
 
-  constructor(
-    NodeView: React.FunctionComponent<NodeViewProps>,
-    nodeViewPos: Omit<ClassWrapperProps, 'Child'>,
-    options: Options,
-  ) {
+  private Child: React.FunctionComponent<NodeViewProps>;
+
+  private root: Root;
+
+  private open = false;
+
+  private edit: boolean;
+
+  constructor(NodeView: React.FunctionComponent<NodeViewProps>, nodeViewPos: NodeViewPos, options: Options) {
     const { node, view, getPos } = nodeViewPos;
     this.node = node;
     this.view = view;
     this.getPos = getPos;
+    this.Child = NodeView;
     this.isSelectionHighlightEnabled = !!options.enableSelectionHighlight;
     this.dom = document.createElement(options.wrapper);
     if (options.className) this.dom.classList.add(options.className);
+    this.edit = isEditable(view.state);
+    this.root = createRoot(this.dom);
+    this.renderReact();
+  }
 
-    render(
-      <ThemeProvider theme={opts.theme}>
-        <Provider store={ref.store()}>
-          <ClassWrapper
-            {...{
-              node,
-              view,
-              getPos,
-              Child: NodeView,
-            }}
-            ref={(r) => {
-              this.editor = r;
-            }}
-          />
-        </Provider>
-      </ThemeProvider>,
-      this.dom,
-      async () => {
-        const edit = isEditable(this.view.state);
-        this.editor?.setState({ open: false, edit });
-      },
+  private renderReact() {
+    const { Child } = this;
+    this.root.render(
+      <Provider store={ref.store()}>
+        <Child
+          {...{
+            node: this.node,
+            view: this.view,
+            getPos: this.getPos,
+            open: this.open,
+            edit: this.edit,
+          }}
+        />
+      </Provider>,
     );
   }
 
   selectNode() {
-    const edit = isEditable(this.view.state);
-    this.editor?.setState({ open: true, edit });
-    if (!edit || !this.isSelectionHighlightEnabled) return;
+    this.open = true;
+    this.edit = isEditable(this.view.state);
+    this.renderReact();
+    if (!this.edit || !this.isSelectionHighlightEnabled) return;
     this.dom.classList.add('ProseMirror-selectednode');
   }
 
   deselectNode() {
-    const edit = isEditable(this.view.state);
-    this.editor?.setState({ open: false, edit });
+    this.open = false;
+    this.edit = isEditable(this.view.state);
+    this.renderReact();
     if (!this.isSelectionHighlightEnabled) return;
     this.dom.classList.remove('ProseMirror-selectednode');
   }
@@ -120,9 +90,17 @@ export class ReactWrapper {
     // TODO: this has decorations in the args!
     if (!node.sameMarkup(this.node)) return false;
     this.node = node;
-    const edit = isEditable(this.view.state);
-    this.editor?.setState({ edit });
+    this.edit = isEditable(this.view.state);
+    this.renderReact();
     return true;
+  }
+
+  destroy() {
+    // ProseMirror destroys node views synchronously while updating the DOM,
+    // which can happen from inside a React event handler — unmounting a root
+    // during React's own render throws. Defer to the next microtask.
+    const { root } = this;
+    queueMicrotask(() => root.unmount());
   }
 }
 
