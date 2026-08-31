@@ -83,6 +83,12 @@ toolbar and suggestion menu, and needs none of the Material UI surface.
 - dropped as unused: `@material-ui/{core,icons,pickers}`, `@date-io/date-fns`,
   `classnames`, `date-fns`, `use-inline-memo`, `lodash.isequal`,
   `scroll-into-view-if-needed`, and `ts-jest`, which upstream kept in `dependencies`
+- `prosemirror-tables` and `prosemirror-gapcursor` moved from `dependencies` to
+  `peerDependencies`. Both register a global selection JSON ID in
+  `prosemirror-state` (`cell` and `gapcursor`), so a second copy throws
+  `RangeError: Duplicate use of selection JSON ID cell` at runtime the moment
+  both are loaded. Upstream had them as ordinary dependencies, which only
+  happened to work while every consumer resolved the same version.
 - `katex` `^0.15` → `^0.16.22`, matching the host so the bundle carries one copy
 - `typescript` `latest` → `^5.9`, and `turbo`/`prettier` pinned likewise. Unpinned tool
   versions were how a fresh install pulled Turbo 2, which renamed `pipeline` to `tasks`
