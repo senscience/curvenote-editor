@@ -73,7 +73,6 @@
     "react-redux": "^7.2.1 || ^8.0.2",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
-    "sidenotes": "^1.1.1",
     "use-inline-memo": "^0.2.0"
   },
   "devDependencies": {
@@ -128,7 +127,6 @@
     "redux-thunk": "^2.4.1",
     "sass": "^1.53.0",
     "sass-loader": "^13.0.2",
-    "sidenotes": "^1.1.1",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.3.1",
     "typescript": "latest",

@@ -3,8 +3,6 @@ import { Plugin, PluginKey } from 'prosemirror-state';
 import { isNodeSelection } from '@curvenote/prosemirror-utils';
 import type { EditorView } from 'prosemirror-view';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { actions, selectors, store } from 'sidenotes';
-import { opts } from '../../connect';
 
 export interface CommentState {
   decorations: DecorationSet;
@@ -82,20 +80,7 @@ const getCommentsPlugin = (): Plugin<CommentState> => {
       init: () => ({ ...emptyCommentState } as CommentState),
       apply(tr, state: CommentState): CommentState {
         const action = tr.getMeta(commentsPlugin) as CommentAction | undefined;
-        const docId = opts.getDocId();
         const decorations = reducer(state, tr, action);
-        // Check if we are in a comment!
-        const around = decorations.find(tr.selection.from, tr.selection.to);
-        if (around.length === 0) {
-          const hasSelectedComment = selectors.selectedSidenote(store.getState(), docId);
-          if (hasSelectedComment) store.dispatch(actions.deselectSidenote(docId));
-        } else {
-          const commentId = around[0].spec.comment;
-          const isSelected = selectors.isSidenoteSelected(store.getState(), docId, commentId);
-          if (!isSelected) {
-            store.dispatch(actions.selectSidenote(docId, commentId));
-          }
-        }
         return {
           decorations,
         };

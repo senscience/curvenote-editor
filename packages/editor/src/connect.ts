@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import type { Theme } from '@material-ui/core';
-import * as sidenotes from 'sidenotes';
 import type { EditorState, Transaction } from 'prosemirror-state';
 import type { Node, Schema, Slice } from 'prosemirror-model';
 import { Fragment } from 'prosemirror-model';
@@ -63,14 +62,9 @@ export const ref: Ref<Store> = {
   },
 };
 
-export function setup(
-  store: Store,
-  opts: Options,
-  options = { setupSidenotes: true },
-) {
+export function setup(store: Store, opts: Options) {
   ref._store = store;
   ref._opts = opts;
-  if (options.setupSidenotes) sidenotes.setup(store as unknown as sidenotes.Store, { padding: 10 });
 }
 
 export const store: Pick<Store, 'getState' | 'dispatch'> = {
