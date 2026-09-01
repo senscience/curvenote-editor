@@ -1,4 +1,4 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect';
 import type { State } from '../types';
 import type { PopperPlacementType } from './types';
 import { getEditorState, getEditorView, selectEditorViewState } from '../state/selectors';

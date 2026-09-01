@@ -3,7 +3,7 @@ import { NodeSelection } from 'prosemirror-state';
 import { findParentNode, isNodeSelection, hasParentNode } from '@curvenote/prosemirror-utils';
 import type { ContentNodeWithPos } from '@curvenote/prosemirror-utils';
 import type { nodeNames } from '@curvenote/schema';
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect';
 import { getNodeIfSelected } from '../ui/utils';
 import { selectEditorState } from '../state/selectors';
 import type { State } from '../types';
