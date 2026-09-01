@@ -1,54 +1,54 @@
-# @curvenote/editor
+# @senscience/curvenote-editor
 
-[![@curvenote/editor on npm](https://img.shields.io/npm/v/@curvenote/editor.svg)](https://www.npmjs.com/package/@curvenote/editor)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/curvenote/editor/blob/main/LICENSE)
-![CI](https://github.com/curvenote/editor/workflows/CI/badge.svg)
-[![demo](https://img.shields.io/badge/live-demo-blue)](https://curvenote.github.io/editor/)
+A fork of [`@curvenote/editor`](https://github.com/curvenote/editor) with the
+Material UI layer removed and React 19 support. MIT licensed, copyright Curvenote
+Inc.; see `LICENSE`.
 
-An interactive scientific editor built with [ProseMirror](https://prosemirror.net/), [React](http://reactjs.org/) and [Redux](https://redux.js.org/) - by [Curvenote](https://curvenote.com).
+A ProseMirror-based editor for MyST markdown, exposing a redux store, an `Editor`
+component and the ProseMirror plugins and node views that go with them.
 
-![@curvenote/editor in curvenote.com](https://github.com/curvenote/editor/raw/main/packages/editor/images/editor.gif)
+## Why this fork exists
 
-## Why
+`@material-ui/core@4` caps its `react` peer at `^17` and calls
+`ReactDOM.findDOMNode` in `Portal`, `Tooltip`, `Popover`, `Menu`, `MenuList`,
+`ButtonBase`, `RootRef` and `Unstable_TrapFocus` — all removed in React 19.
+`views/NodeView.tsx` additionally called `ReactDOM.render`, also removed. Upstream's
+last npm release was November 2022, so there is no version to upgrade to.
 
-We think that creating beautiful reactive documents and explorable explanations should be easy. Writing technical documents is hard enough already, and choosing to make that writing interactive is beyond the reach or time-commitment of most communicators.
+## What is different
 
-We aim to lower the barriers to _writing_ computational narratives. Today, _narrative_ is often moved out of computational notebooks into _static_ document creation tools (Microsoft Word, Google Docs, LaTeX, Slides/PPT).
+The public API is deliberately narrower than upstream's: the Material UI
+components (`EditorMenu`, `InlineActions`, `Suggestion`, `Keyboard`, `Attributes`,
+`SelectWidth`, `MenuIcon`), the interactive widget layer and the sidenotes
+integration are gone, and consumers bring their own UI. `setup()` takes two
+arguments, `Options` has no `theme`, and `State` has no `sidenotes` slice.
 
-We think this is for two reasons:
+`CHANGES.md` in the repository root records every divergence, why it was made, and
+the known debt that came with it.
 
-1. The need for more expressive components, formatting or referencing.
-   - [CommonMark](https://commonmark.org/) markdown does not support, for example, citations, cross-references, and even simple formatting like callouts (see various alternatives below).
-2. To enable collaborators and reviewers who don't use these tools (e.g. when writing and reviewing papers & reports, slide decks, etc.)
-   - Writing often requires collaborators that may not be comfortable with some combination of the tools required for computational narratives (e.g. git, md, notebooks, javascript, etc.).
+## Install
 
-## Goals
+Published to GitHub Packages, so the `@senscience` scope needs to point there:
 
-`@curvenote/editor` aims to bridge the gap between expressiveness and writing accessibility by developing a rich, [WYSIWYG](https://en.wikipedia.org/wiki/WYSIWYG), collaborative editor with a focus on interactivity that integrates with LaTeX, various flavours of Markdown, and the Jupyter and Sphinx ecosystems.
-
-## Overlap with [Curvenote](https://curvenote.com)
-
-`@curvenote/editor` is the editor that is used in [Curvenote](https://curvenote.com), which is a scientific writing platform that connects to Jupyter.
-
-## Architecture
-
-- Basic prosemirror, wrapped in a React component with some middleware in Redux.
-- Chosen to have many "blocks" of the editor on a page at once. See the UI in [Curvenote](https://curvenote.com) as to what we are supporting - inspired in part by [Jupyter](https://jupyter.org/).
-  - If you only need one editor on the page, the weird part will be integrating with Redux, and some unnecessary indexing. However, this is probably important anyways if you have comments or other places in the DOM that are instances of the editor.
-- Typescript and fully typed.
-- Styling of editor components with [material-ui](https://material-ui.com)
-- Reactivity powered by `@curvenote/components` and `@curvenote/runtime`, which are [web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
-- Real-time collaboration is possible through middleware integrations. See [prosemirror-collab](https://github.com/ProseMirror/prosemirror-collab).
-  - We will (eventually) improve support for cursors and highlights. See Roadmap.
-- See [demo/index.tsx](/packages/editor/demo/index.tsx) for an example setup.
-
-## Getting Started
-
-```
-git clone git@github.com:curvenote/editor.git
-cd editor
-npm install
-npm run start
+```sh
+npm config set @senscience:registry https://npm.pkg.github.com
+npm config set //npm.pkg.github.com/:_authToken $(gh auth token)
 ```
 
-See the [demo folder](/packages/editor/demo/index.tsx) from more details on how to get started.
+```sh
+npm install @senscience/curvenote-editor
+```
+
+## Peer dependencies
+
+React 19, `react-redux@9`, `redux@5` and `redux-thunk@3`, plus `@curvenote/schema`,
+`@curvenote/runtime`, `fuse.js` and the ProseMirror packages listed in
+`package.json`.
+
+Note that `react-redux@9` requires `redux@^5`, and `redux-thunk@3` dropped its
+default export: `import { thunk } from 'redux-thunk'`.
+
+`prosemirror-tables` and `prosemirror-gapcursor` are peers rather than
+dependencies on purpose. Each registers a global selection JSON ID in
+`prosemirror-state`, so a second copy in the tree throws
+`RangeError: Duplicate use of selection JSON ID cell` as soon as both load.
