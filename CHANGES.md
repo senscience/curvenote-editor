@@ -89,6 +89,10 @@ toolbar and suggestion menu, and needs none of the Material UI surface.
   `RangeError: Duplicate use of selection JSON ID cell` at runtime the moment
   both are loaded. Upstream had them as ordinary dependencies, which only
   happened to work while every consumer resolved the same version.
+- `@reduxjs/toolkit` replaced by `reselect@^5`. RTK was pulled in for exactly one
+  import, `createSelector`, in three selector files — and RTK 1.9 declares
+  optional peers on react and react-redux capped at 18, which made npm warn
+  loudly about a package the fork barely used.
 - `katex` `^0.15` → `^0.16.22`, matching the host so the bundle carries one copy
 - `typescript` `latest` → `^5.9`, and `turbo`/`prettier` pinned likewise. Unpinned tool
   versions were how a fresh install pulled Turbo 2, which renamed `pipeline` to `tasks`

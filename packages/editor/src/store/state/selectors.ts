@@ -1,5 +1,5 @@
 import type { StateCounter } from '@curvenote/schema/dist/types/types';
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect';
 import type { EditorState } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { opts } from '../../connect';
