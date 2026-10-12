@@ -1,6 +1,6 @@
 {
   "name": "@senscience/curvenote-editor",
-  "version": "0.17.6-senscience.0",
+  "version": "0.17.6-senscience.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",

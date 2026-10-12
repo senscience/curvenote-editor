@@ -162,13 +162,3 @@ export function buildKeymap(stateKey: any, schema: Schema): Keymap {
   addAllCommands(stateKey, schema, bind);
   return flattenCommandList(keys);
 }
-
-export function captureTab(): Keymap {
-  // Always capture the Tab.
-  const capture: Command = () => true;
-  const keys = {
-    'Shift-Tab': capture,
-    Tab: capture,
-  };
-  return keys;
-}
