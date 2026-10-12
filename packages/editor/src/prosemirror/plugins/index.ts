@@ -11,7 +11,7 @@ import { nodeNames } from '@curvenote/schema';
 import type { Plugin } from 'prosemirror-state';
 import { autocomplete } from 'prosemirror-autocomplete';
 import type { Trigger } from 'prosemirror-autocomplete';
-import { buildBasicKeymap, buildCommentKeymap, buildKeymap, captureTab } from '../keymap';
+import { buildBasicKeymap, buildCommentKeymap, buildKeymap } from '../keymap';
 
 import inputrules from '../inputrules';
 import { store } from '../../connect';
@@ -113,7 +113,6 @@ export function getPlugins(
     collab({ version }),
     ...tablesPlugins(schema), // put this plugin near the end of the array of plugins, since it handles mouse and arrow key events in tables rather broadly
     history(),
-    keymap(captureTab()),
   ];
 }
 
