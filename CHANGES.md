@@ -71,6 +71,12 @@ toolbar and suggestion menu, and needs none of the Material UI surface.
 - **`PopperPlacementType` is defined locally** in `store/ui/types.ts`, copied verbatim
   from Material UI's `Popper` — deliberately *not* from popper.js, whose union is wider
   (Material UI dropped `auto`, `auto-start` and `auto-end`, leaving 12 of 15 values).
+- **Tab is no longer captured unconditionally.** Upstream ended the plugin list with a
+  catch-all `captureTab()` keymap that returned `true` for Tab and Shift-Tab, so
+  ProseMirror called `preventDefault` even when no command used the key, trapping keyboard
+  users inside the editor (WCAG 2.1.2). Tab is now handled only by real commands (list
+  indent and outdent, table cell navigation, the suggestion menu, math, footnote and code
+  block views); otherwise the browser moves focus as usual.
 - **`dist` is flat.** Dropping `demo` from `tsconfig.include` left one root, so tsc emits
   to `dist/` rather than `dist/src/`; `main` and `types` follow.
 
